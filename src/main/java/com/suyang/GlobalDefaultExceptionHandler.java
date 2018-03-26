@@ -23,16 +23,31 @@ import com.suyang.exceptions.APIException;
 import com.suyang.exceptions.APIExceptionType;
 import com.suyang.exceptions.ErrorType;
 
+/**
+ * 错误处理类
+ * @author SuYang
+ *
+ */
 @ControllerAdvice
 public class GlobalDefaultExceptionHandler {
 	private static Logger logger = LoggerFactory.getLogger(GlobalDefaultExceptionHandler.class);
 
+	/**
+	 * 错误信息缓存
+	 * key=错误信息key
+	 * value={key=语言key, value=错误信息}
+	 */
 	private static HashMap<String, HashMap<String, String>> errorMessage = new HashMap<>();
+	/**
+	 * 存储错误信息的文件
+	 */
 	private static final String ERROR_FILE = "errormessage.yml";
+	/**
+	 * 默认语言
+	 */
 	private static final String DEFAULT_LOCAL = "cn";
 
 	static  {
-		
 		try {
 			initialize();
 		} catch (JsonProcessingException e) {
@@ -79,6 +94,12 @@ public class GlobalDefaultExceptionHandler {
 		return result;
 	}
 
+	/**
+	 * 初始化
+	 * 将错误信息文件的内容读取到缓存
+	 * @throws JsonProcessingException
+	 * @throws IOException
+	 */
 	private synchronized static void initialize() throws JsonProcessingException, IOException {
 		ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 		JsonNode root = mapper.readTree(ClassLoader.getSystemResourceAsStream(ERROR_FILE));

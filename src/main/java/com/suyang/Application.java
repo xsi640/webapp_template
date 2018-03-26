@@ -15,6 +15,10 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 	}
 
+	/**
+	 * 默认String to data类型的转换
+	 * @return
+	 */
 	@Bean
 	public Converter<String, Date> addNewConvert() {
 		return new Converter<String, Date>() {
