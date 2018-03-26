@@ -54,7 +54,7 @@ class UserManager extends Component {
                 }
             }
         } else if (nextProps.error) {
-            this.setState({loading:false});
+            this.setState({ loading: false });
             message.error(nextProps.error);
         }
     }

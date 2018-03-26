@@ -57,6 +57,9 @@ class UserEditor extends Component {
             } else {
                 this.handleSaveUser();
             }
+        } else if (nextProps.error) {
+            this.setState({ loading: false });
+            message.error(nextProps.error);
         }
         this.props.clear();
     }
@@ -160,7 +163,7 @@ class UserEditor extends Component {
                                         initialValue: this._user ? this._user.loginName : '',
                                     })(
                                         <Input placeholder="请输入登录名" disabled={isModify} />
-                                        )
+                                    )
                                 }
                             </FormItem>
                             <FormItem label="登录密码" {...formItemLayout}>
@@ -169,7 +172,7 @@ class UserEditor extends Component {
                                         rules: pwdRules
                                     })(
                                         <Input placeholder="请输入登录密码" type="password" />
-                                        )
+                                    )
                                 }
                             </FormItem>
                             <FormItem label="重复密码" {...formItemLayout}>
@@ -187,7 +190,7 @@ class UserEditor extends Component {
                                         }]
                                     })(
                                         <Input placeholder="请重新输入登录密码" type="password" />
-                                        )
+                                    )
                                 }
                             </FormItem>
                             <FormItem label="真实姓名" {...formItemLayout}>
@@ -200,7 +203,7 @@ class UserEditor extends Component {
                                         initialValue: this._user ? this._user.realName : ''
                                     })(
                                         <Input placeholder="请输入真实姓名" />
-                                        )
+                                    )
                                 }
                             </FormItem>
                             <FormItem label="性别" {...formItemLayout}>
@@ -216,7 +219,7 @@ class UserEditor extends Component {
                                             <Radio value={2}>女</Radio>
                                             <Radio value={0}>保密</Radio>
                                         </RadioGroup>
-                                        )
+                                    )
                                 }
                             </FormItem>
                             <FormItem label="生日" {...formItemLayout}>
@@ -225,7 +228,7 @@ class UserEditor extends Component {
                                         initialValue: this._user ? moment(this._user.birthday) : moment().add(-18, 'y')
                                     })(
                                         <DatePicker format="YYYY-MM-DD" allowClear={false} />
-                                        )
+                                    )
                                 }
                             </FormItem>
                             <FormItem label="地址" {...formItemLayout}>
@@ -235,7 +238,7 @@ class UserEditor extends Component {
                                         initialValue: this._user ? this._user.address : ''
                                     })(
                                         <Input placeholder="请输入地址" />
-                                        )
+                                    )
                                 }
                             </FormItem>
                         </div>
