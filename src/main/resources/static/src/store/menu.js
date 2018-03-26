@@ -1,3 +1,6 @@
+/**
+ * 存储菜单的常量
+ */
 import UserManager from '../components/users/usermanager'
 
 export const dataNavs = [{ id: 1, name: '资源管理', alias: 'resouces' },

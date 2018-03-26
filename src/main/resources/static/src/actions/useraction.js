@@ -1,3 +1,6 @@
+/**
+ * 用于处理用户访问数据库的Action
+ */
 import * as MESSAGE from '../consts/message'
 import * as UserAPI from '../service/userapi'
 
