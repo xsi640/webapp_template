@@ -1,9 +1,9 @@
 package com.suyang.domain;
 
 public class ResponseMessage {
-	private int code;
-	private String message;
-	private String body;
+	private int code = 0;
+	private String message = "";
+	private Object body;
 
 	public int getCode() {
 		return code;
@@ -21,11 +21,17 @@ public class ResponseMessage {
 		this.message = message;
 	}
 
-	public String getBody() {
+	public Object getBody() {
 		return body;
 	}
 
-	public void setBody(String body) {
+	public void setBody(Object body) {
 		this.body = body;
+	}
+	
+	public static ResponseMessage success(Object body) {
+		ResponseMessage result = new ResponseMessage();
+		result.setBody(body);
+		return result;
 	}
 }

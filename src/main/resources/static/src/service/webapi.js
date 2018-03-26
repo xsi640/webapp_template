@@ -22,10 +22,20 @@ export const Request = (url, method, parameters = {}, resolve, reject) => {
         }
         url += 'd=' + new Date().getTime();
         fetch(url, { method: 'GET', headers: headers })
-        .then(resp => resp.json())
-        .then(json => resolve(json))
-        .catch(err => reject(err));
-    }else{
+            .then(resp => resp.json())
+            .then(json => {
+                console.log(json);
+                if (json.code === 0) {
+                    resolve(json.body);
+                } else {
+                    reject(json.message);
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                reject(err)
+            });
+    } else {
         url += '?d=' + new Date().getTime();
         let data = '';
         for (let key in parameters) {
@@ -33,8 +43,18 @@ export const Request = (url, method, parameters = {}, resolve, reject) => {
         }
         fetch(url, { method: method, headers: headers, body: data })
             .then(resp => resp.json())
-            .then(json => resolve(json))
-            .catch(err => reject(err));
+            .then(json => {
+                console.log(json);
+                if (json.code === 0) {
+                    resolve(json.body);
+                } else {
+                    reject(json.message);
+                }
+            })
+            .catch(err => {
+                console.log(err);
+                reject(err)
+            });
     }
 }
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import { Button, Table, Pagination } from 'antd'
+import { Button, Table, Pagination, message } from 'antd'
 import UserEditor from './usereditor'
 import * as UserAction from '../../actions/useraction'
 
@@ -53,6 +53,9 @@ class UserManager extends Component {
                     this.setState({ loading: false });
                 }
             }
+        } else if (nextProps.error) {
+            this.setState({loading:false});
+            message.error(nextProps.error);
         }
     }
 
@@ -155,7 +158,7 @@ class UserManager extends Component {
                     <Button type="primary" disabled={!isSingleSelected} style={{ marginRight: '15px' }} onClick={this.handleModify}>修改</Button>
                     <Button type="primary" disabled={!hasSelected} style={{ marginRight: '15px' }} onClick={this.handleDelete}>删除</Button>
                 </div>
-                <UserEditor wrappedComponentRef={(ref)=>this.userEditor = ref} onClose={this.handleClose} />
+                <UserEditor wrappedComponentRef={(ref) => this.userEditor = ref} onClose={this.handleClose} />
                 <Table rowKey="id" rowSelection={rowSelection} columns={columns} dataSource={data} loading={loading} style={{ marginTop: '10px' }} />
                 <Pagination total={total} pageSize={pageSize} current={pageIndex} onChange={this.handlePageChange} onShowSizeChange={this.handlePageSizeChange} showSizeChanger={true} style={{ marginTop: '15px' }} />
             </div>

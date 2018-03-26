@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -57,18 +58,21 @@ public class GlobalDefaultExceptionHandler {
 		}
 	}
 
+	@ResponseBody
 	@ExceptionHandler(value = Exception.class)
 	public ResponseMessage defaultErrorHandler(HttpServletRequest request, Exception e) {
 		String key = APIExceptionType.UnKnow.name();
 		return createErrorMessage(request, key, ErrorType.System.getValue());
 	}
 	
+	@ResponseBody
 	@ExceptionHandler(value = SQLException.class)
 	public ResponseMessage sqlErrorHandler(HttpServletRequest request, Exception e) {
 		String key = APIExceptionType.UnKnow.name();
 		return createErrorMessage(request, key, ErrorType.Database.getValue());
 	}
 
+	@ResponseBody
 	@ExceptionHandler(APIException.class)
 	public ResponseMessage handleAPIException(HttpServletRequest request, APIException ex) {
 		return createErrorMessage(request, ex.getType().name(), ErrorType.API.getValue());
