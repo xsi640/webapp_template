@@ -27,21 +27,22 @@ public class UserController {
 
 	@RequestMapping(value = "/api/user/{id}", method = RequestMethod.GET)
 	public User findOne(@PathVariable("id") final int id) {
-		return userRepository.findOne(id);
+		return userRepository.findById(id).orElse(null);
 	}
 
 	@RequestMapping(value = "/api/user", method = RequestMethod.GET)
 	public Page<User> findAll(@RequestParam(name = "pageIndex", required = false, defaultValue = "1") int pageIndex,
 							  @RequestParam(name = "pageSize", required = false, defaultValue = "10") int pageSize) {
-		Pageable pageable = new PageRequest(pageIndex - 1, pageSize);
+		Pageable pageable = PageRequest.of(pageIndex - 1, pageSize);
 		return userRepository.findAll(pageable);
 	}
 
 	@RequestMapping(value = "/api/user", method = RequestMethod.POST)
-	public User create(@RequestParam(required = true) String loginName, 
-						@RequestParam(required = true) String loginPwd,
-						@RequestParam(required = true) String realName, 
-						int sex, Date birthday, String address) {
+	public User create(String loginName,
+					   String loginPwd,
+					   String realName,
+					   int sex, Date birthday,
+					   String address) {
 		User user = new User();
 		user.setLoginName(loginName);
 		user.setRealName(realName);
@@ -58,11 +59,11 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/api/user", method = RequestMethod.PUT)
-	public User modify(@RequestParam(required = true) int id, 
-						String loginPwd,
-						@RequestParam(required = true) String realName, 
-						int sex, Date birthday, String address) {
-		User user = userRepository.findOne(id);
+	public User modify(int id,
+					   String loginPwd,
+					   String realName,
+					   int sex, Date birthday, String address) {
+		User user = userRepository.findById(id).orElse(null);
 		if (user == null)
 			return null;
 
@@ -81,7 +82,7 @@ public class UserController {
 	@RequestMapping(value = "/api/user/{id}", method = RequestMethod.DELETE)
 	public int delete(@PathVariable("id") int id) throws Exception {
 		int result = 0;
-		User user = userRepository.findOne(id);
+		User user = userRepository.findById(id).orElse(null);
 		if (user != null) {
 			if (user.getLoginName().equals("admin")) {
 				throw new APIException(APIExceptionType.NoLimit);
@@ -93,7 +94,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/api/user/checkname")
-	public boolean existsName(@RequestParam(required = true) String loginName) {
+	public boolean existsName(String loginName) {
 		return userRepository.countByLoginName(loginName) > 0;
 	}
 }

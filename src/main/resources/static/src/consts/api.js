@@ -1,7 +1,7 @@
 /**
  * 存储服务器API接口地址
  */
-const baseurl = "http://localhost:3000/api"
+const baseurl = "/api"
 
 export const getUsers = baseurl + '/user'
 export const saveUser = baseurl + '/user'
